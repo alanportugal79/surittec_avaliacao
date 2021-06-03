@@ -1,0 +1,45 @@
+package com.avaliacao.clientes.controller;
+
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.avaliacao.clientes.model.Log;
+import com.avaliacao.clientes.repository.LogRepository;
+
+@Component
+public class TaxiFareRequestInterceptor 
+  extends HandlerInterceptorAdapter {
+
+	@Autowired
+	private LogRepository logRepository;
+	
+	@Override
+    public boolean preHandle(
+      HttpServletRequest request, 
+      HttpServletResponse response, 
+      Object handler) {
+        return true;
+    }
+
+    @Override
+    public void afterCompletion(
+      HttpServletRequest request, 
+      HttpServletResponse response, 
+      Object handler, 
+      Exception ex) {
+    	String token = request.getParameter("tokeb");
+    	
+    	Log log = new Log();
+		log.setData(new Date());
+		log.setOperacao("SELECT");
+		log.setTabela("CLIENTES");
+		log.setUsuario(Permissao.usuarioLogado(token));		
+		logRepository.save(log);
+    }
+}

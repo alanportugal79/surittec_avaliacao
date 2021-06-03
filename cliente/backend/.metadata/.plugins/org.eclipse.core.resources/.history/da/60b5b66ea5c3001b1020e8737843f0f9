@@ -1,0 +1,47 @@
+package com.avaliacao.clientes.controller;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.avaliacao.clientes.model.Login;
+
+@CrossOrigin
+@RestController
+@RequestMapping("/login")
+public class LoginController {
+	
+	@PostMapping
+	public  ResponseEntity<Login> login(@RequestBody Login login) {
+		
+		//return  ResponseEntity.ok().body(login.getSenha());
+		
+		if (login.getUsuario() == "admin" || login.getUsuario() == "comum") {
+			return ResponseEntity.ok().body(login);
+			/*if (login.getSenha() == "123456") {
+				Login r = new Login();
+				r.setUsuario(login.getUsuario());
+				
+				if (login.getUsuario() == "admin") {
+					r.setToken("a1b2c3d4"); // token admin
+				} else { 
+					r.setToken("d4c3b2a1"); // token comum
+				}
+				
+				return ResponseEntity.ok().body(r);
+			} else {
+				return ResponseEntity.badRequest().build();
+			}*/
+		
+		} else {
+			return ResponseEntity.badRequest().build();
+		}		
+	}
+}

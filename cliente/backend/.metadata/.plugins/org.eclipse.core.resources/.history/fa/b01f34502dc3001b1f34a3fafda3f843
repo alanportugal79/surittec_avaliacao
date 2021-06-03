@@ -1,0 +1,9 @@
+insert into cliente (id, nome, cpf, cep, logradouro, complemento, bairro, cidade, uf) values (1, 'JOAO DA SILVA', '12345678912', '12345678', 'Av. Teste, quadra 000', 'casa 123', 'BAIRRO TESTE', 'CIDADE TESTE', 'DF');
+insert into cliente (id, nome, cpf, cep, logradouro, complemento, bairro, cidade, uf) values (2, 'MARIA APARECIDA', '12345678912', '12345678', 'Av. Teste, quadra 000', 'casa 123', 'BAIRRO MARIA', 'CIDADE MARIA', 'DF');
+insert into cliente (id, nome, cpf, cep, logradouro, complemento, bairro, cidade, uf) values (3, 'JOSE CARLOS', '12345678912', '12345678', 'Av. Teste, quadra 000', 'casa 123', 'BAIRRO MARIA', 'CIDADE MARIA', 'DF');
+insert into email (id, email, id_cliente) values (1, 'joao1@exemplo.com', 1);
+insert into email (id, email, id_cliente) values (2, 'joao2@exemplo.com', 1);
+insert into email (id, email, id_cliente) values (3, 'maria@exemplo.com', 2);
+insert into email (id, email, id_cliente) values (4, 'jose@exemplo.com', 3);
+insert into telefone (id, tipo, numero, id_cliente) values (1, 'CELULAR', '61912341234', 1);
+insert into telefone (id, tipo, numero, id_cliente) values (2, 'RESIDENCIAL', '6132341234', 2);

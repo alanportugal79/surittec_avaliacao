@@ -1,0 +1,25 @@
+package com.avaliacao.clientes.controller;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.avaliacao.clientes.repository.LogRepository;
+import com.avaliacao.clientes.model.Log;
+
+public class LogController {
+	
+	@Autowired
+	private LogRepository logRepo;
+	
+	public void log(String metodo, String classe, String usuario) {
+		Log log = new Log();
+		
+		log.setData(new Date());
+		log.setOperacao(metodo);
+		log.setTabela(classe);
+		log.setUsuario(usuario);
+		
+		logRepo.save(log);
+	}
+}

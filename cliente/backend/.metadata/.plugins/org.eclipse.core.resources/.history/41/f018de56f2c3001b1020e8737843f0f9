@@ -1,0 +1,30 @@
+package com.avaliacao.clientes;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.avaliacao.clientes.controller.Permissao;
+import com.avaliacao.clientes.model.Log;
+import com.avaliacao.clientes.repository.LogRepository;
+
+public class Logs {
+	
+	
+	LogRepository logRep;
+	
+	public Logs(LogRepository logRepo) {
+		this.logRep = logRepo;
+	}
+	
+	public void regLog(String metodo, String classe, String token) {
+		
+		Log log = new Log();
+		log.setData(new Date());
+		log.setOperacao(metodo);
+		log.setTabela(classe);
+		log.setUsuario(Permissao.usuarioLogado(token));
+		
+		logRep.save(log);
+	}
+}

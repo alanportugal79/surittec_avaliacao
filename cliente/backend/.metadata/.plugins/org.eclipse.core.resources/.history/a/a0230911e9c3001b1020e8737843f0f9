@@ -1,0 +1,151 @@
+package com.avaliacao.clientes.controller;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.avaliacao.clientes.model.ApiRetorno;
+import com.avaliacao.clientes.model.Cliente;
+import com.avaliacao.clientes.model.Log;
+import com.avaliacao.clientes.repository.ClienteRepository;
+import com.avaliacao.clientes.repository.LogRepository;
+
+@CrossOrigin
+@RestController
+@RequestMapping("/clientes")
+public class ClienteController {
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private LogRepository logRepository;
+
+		
+	@GetMapping
+	public ResponseEntity<List<Cliente>> listar(@RequestParam("token") String token) {
+				
+		/*Log log = new Log();
+		log.setData(new Date());
+		log.setOperacao("SELECT");
+		log.setTabela("CLIENTES");
+		log.setUsuario(auth.getName());		
+		logRepository.save(log);*/
+		
+		return ResponseEntity.ok().body(clienteRepository.findAll());		
+		
+	}
+	
+	@CrossOrigin
+	@PostMapping
+	public ResponseEntity<ApiRetorno> adicionar(@RequestParam("token") String token, @RequestBody Cliente cliente) {
+			
+		/*Log log = new Log();
+		log.setData(new Date());
+		log.setOperacao("ADICIONA");
+		log.setTabela("CLIENTES");
+		log.setUsuario(auth.getName());
+		logRepository.save(log);*/
+		
+		ApiRetorno ret = new ApiRetorno();
+		if (token.equals("a1b2c3d4")) { // token do admin
+			Cliente salvo = clienteRepository.save(cliente);
+			ret.setErro(false);
+			ret.setMensagem("Salvo com sucesso");
+			ret.setDados(salvo);
+			return ResponseEntity.ok().body(ret);
+		} else {
+			ret.setErro(true);
+			ret.setMensagem("Sem Permissão");
+			ret.setDados(null);
+			return ResponseEntity.ok().body(ret);
+		}
+	}
+	
+	@CrossOrigin
+	@PutMapping(value="/{id}")
+	public ResponseEntity<ApiRetorno> editar(
+			@PathVariable("id") long id, 
+			@RequestParam("token") String token, 
+			@RequestBody Cliente cliente) {
+		
+		
+		/*Log log = new Log();
+		log.setData(new Date());
+		log.setOperacao("ALTERA");
+		log.setTabela("CLIENTES");
+		log.setUsuario(auth.getName());
+		logRepository.save(log);*/
+		
+		ApiRetorno ret = new ApiRetorno();
+		if (token.equals("a1b2c3d4")) { // token do admin
+			return clienteRepository.findById(id)
+					.map(registro -> {
+						registro.setNome(cliente.getNome());
+						registro.setCep(cliente.getCep());
+						registro.setLogradouro(cliente.getLogradouro());
+						registro.setComplemento(cliente.getComplemento());
+						registro.setBairro(cliente.getBairro());
+						registro.setCidade(cliente.getCidade());
+						registro.setUf(cliente.getUf());
+						
+						Cliente atualizado = clienteRepository.save(registro);
+						
+						ret.setErro(false);
+						ret.setMensagem("Salvo com sucesso");
+						ret.setDados(atualizado);
+						
+						
+						return ResponseEntity.ok().body(ret);
+					}).orElse(ResponseEntity.notFound().build());
+		} else {
+			ret.setErro(true);
+			ret.setMensagem("Sem permissão");
+			ret.setDados(null);
+			return ResponseEntity.ok().body(ret);
+		}
+	}
+	
+	@CrossOrigin
+	@DeleteMapping(path ={"/{id}"})
+	public ResponseEntity<?> delete(@PathVariable long id, @RequestParam("token") String token) {
+	
+		
+		/*Log log = new Log();
+		log.setData(new Date());
+		log.setOperacao("DELETA");
+		log.setTabela("CLIENTES");
+		log.setUsuario(auth.getName());
+		logRepository.save(log);*/
+		
+		ApiRetorno ret = new ApiRetorno();
+		if (token.equals("a1b2c3d4")) { // token do admin		
+					
+			return clienteRepository.findById(id)
+	           .map(registro -> {
+	        	   clienteRepository.deleteById(id);
+	        	   ret.setErro(false);
+				   ret.setMensagem("Excluído coms sucesso");
+				   ret.setDados(null);
+	        	   return ResponseEntity.ok().body(ret);
+	           }).orElse(ResponseEntity.notFound().build());
+		} else {
+			ret.setErro(true);
+			ret.setMensagem("Sem permissão");
+			ret.setDados(null);
+			return ResponseEntity.ok().body(ret);
+		}
+	} 
+}

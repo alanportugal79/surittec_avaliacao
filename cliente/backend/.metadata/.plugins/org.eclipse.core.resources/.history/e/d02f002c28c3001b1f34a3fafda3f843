@@ -1,0 +1,106 @@
+package com.avaliacao.clientes.controller;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.avaliacao.clientes.model.Cliente;
+import com.avaliacao.clientes.model.Log;
+import com.avaliacao.clientes.repository.ClienteRepository;
+import com.avaliacao.clientes.repository.LogRepository;
+
+@RestController
+@RequestMapping("/clientes")
+public class ClienteController {
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private LogRepository logRepository;
+
+	
+	@GetMapping
+	public List<Cliente> listar() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Log log = new Log();
+		log.setData(new Date());
+		log.setOperacao("SELECT");
+		log.setTabela("CLIENTES");
+		log.setUsuario(auth.getName());		
+		logRepository.save(log);
+		
+		return clienteRepository.findAll();
+		
+	}
+	
+	@PostMapping
+	public Cliente adicionar(@RequestBody Cliente cliente) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Log log = new Log();
+		log.setData(new Date());
+		log.setOperacao("ADICIONA");
+		log.setTabela("CLIENTES");
+		log.setUsuario(this.auth.getName());
+		logRepository.save(log);
+		
+		return clienteRepository.save(cliente);
+	}
+	
+	@PutMapping(value="/{id}")
+	public ResponseEntity editar(@PathVariable("id") long id, @RequestBody Cliente cliente) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Log log = new Log();
+		log.setData(new Date());
+		log.setOperacao("ALTERA");
+		log.setTabela("CLIENTES");
+		log.setUsuario(this.auth.getName());
+		logRepository.save(log);
+		
+		return clienteRepository.findById(id)
+				.map(registro -> {
+					registro.setNome(cliente.getNome());
+					registro.setCep(cliente.getCep());
+					registro.setLogradouro(cliente.getLogradouro());
+					registro.setComplemento(cliente.getComplemento());
+					registro.setBairro(cliente.getBairro());
+					registro.setCidade(cliente.getCidade());
+					registro.setUf(cliente.getUf());
+					Cliente atualizado = clienteRepository.save(registro);
+					return ResponseEntity.ok().body(atualizado);
+				}).orElse(ResponseEntity.notFound().build());
+	}
+	
+	@DeleteMapping(path ={"/{id}"})
+	public ResponseEntity <?> delete(@PathVariable long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Log log = new Log();
+		log.setData(new Date());
+		log.setOperacao("DELETA");
+		log.setTabela("CLIENTES");
+		log.setUsuario(this.auth.getName());
+		logRepository.save(log);
+		
+		return clienteRepository.findById(id)
+	           .map(record -> {
+	        	   clienteRepository.deleteById(id);
+	               return ResponseEntity.ok().build();
+	           }).orElse(ResponseEntity.notFound().build());
+	} 
+}

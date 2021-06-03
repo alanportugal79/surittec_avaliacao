@@ -1,0 +1,5 @@
+package com.avaliacao.clientes.config;
+
+public class SegurancaConfig {
+
+}

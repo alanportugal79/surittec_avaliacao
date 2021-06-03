@@ -1,0 +1,27 @@
+package com.avaliacao.clientes.controller;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.avaliacao.clientes.repository.LogRepository;
+import com.avaliacao.clientes.model.Log;
+
+@RestController
+public class LogController {
+	
+	@Autowired
+	private LogRepository logRepository;
+	
+	public void log(String metodo, String classe, String usuario) {
+		Log log = new Log();
+		
+		log.setData(new Date());
+		log.setOperacao(metodo);
+		log.setTabela(classe);
+		log.setUsuario(usuario);
+		
+		this.logRepository.save(log);
+	}
+}
