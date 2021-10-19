@@ -7,5 +7,6 @@ import com.avaliacao.clientes.model.Log;
 
 @Repository
 public interface LogRepository extends JpaRepository<Log, Long>{
+	
 
 }

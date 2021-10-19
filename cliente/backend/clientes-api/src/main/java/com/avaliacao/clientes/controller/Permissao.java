@@ -7,6 +7,7 @@ public class Permissao {
 	}
 	
 	public static String usuarioLogado(String token) {
-		return token.equals("a1b2c3d4") ? "admin" : "comum";		
+		return token.equals("a1b2c3d4") ? "admin" : "comum";	
+		
 	}
 }

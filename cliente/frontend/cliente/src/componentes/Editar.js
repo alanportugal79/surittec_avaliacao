@@ -136,6 +136,7 @@ export default class Editar extends React.Component {
     if(!this.state.cep){
         formEstaValido = false;
         erros["cep"] = "Campo cep é obrigatorio";
+		
     }
 
     if(!this.state.logradouro){
@@ -471,6 +472,7 @@ export default class Editar extends React.Component {
             </div>
           </form>
         </div>
+		
       );
   }
 };

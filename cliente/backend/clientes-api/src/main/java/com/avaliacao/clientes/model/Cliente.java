@@ -38,4 +38,5 @@ public class Cliente {
 	
 	@Column(nullable = false)
 	private String uf;	
+	
 }

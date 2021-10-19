@@ -115,7 +115,8 @@ export default class Clientes extends React.Component {
             />
           )}   
         </div>
-      );    
+      );  
+	  
   }
 
 }

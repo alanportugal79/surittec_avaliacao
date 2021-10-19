@@ -84,6 +84,7 @@ public class TelefoneController {
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Telefone> editar(@PathVariable("id") long id, @RequestBody Telefone telefone) {
 		
+		
 		return telefoneRepository.findById(id)
 				.map(registro -> {
 					registro.setNumero(telefone.getNumero());

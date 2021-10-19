@@ -174,6 +174,7 @@ public class ClienteController {
 			ret.setMensagem("Sem permissão");
 			ret.setDados(null);
 			return ResponseEntity.ok().body(ret);
+			
 		}
 	} 
 }

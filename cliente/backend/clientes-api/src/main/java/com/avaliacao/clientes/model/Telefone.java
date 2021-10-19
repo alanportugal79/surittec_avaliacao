@@ -24,4 +24,5 @@ public class Telefone {
 	@Column(nullable = false)
 	private Long id_cliente;
 	
+	
 }

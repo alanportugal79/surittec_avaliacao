@@ -74,6 +74,7 @@ export default class Tabela extends React.Component {
             )}
             </tbody>
         </table>
+		
         </div>
     );
   }

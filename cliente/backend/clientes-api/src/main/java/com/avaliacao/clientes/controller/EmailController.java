@@ -100,5 +100,6 @@ public class EmailController {
 	        	   emailRepository.deleteById(id);
 	               return ResponseEntity.ok().build();
 	           }).orElse(ResponseEntity.notFound().build());
+			   
 	} 
 }

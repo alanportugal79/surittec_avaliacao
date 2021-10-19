@@ -28,6 +28,7 @@ export default class Cep extends React.Component {
                 </div>
                 }}
             </ViaCep>
+			
         )
     }
 }

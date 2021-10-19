@@ -15,6 +15,7 @@ export default class Header extends React.Component {
             <button onClick={() => this.props.setEstaAdicionando(true)}>Adicionar Clientes</button>
         </div>
         </header>
+		
     );
   }
 };

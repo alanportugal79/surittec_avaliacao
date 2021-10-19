@@ -7,5 +7,6 @@ import com.avaliacao.clientes.model.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
-
+	
+	
 }

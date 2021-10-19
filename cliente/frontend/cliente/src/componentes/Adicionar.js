@@ -449,5 +449,6 @@ export default class Adicionar extends React.Component {
           </form>
         </div>
       );
+	  
   }
 };

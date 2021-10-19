@@ -30,6 +30,7 @@ export default class Login extends React.Component {
             this.props.setLogado(true);
         }
       });
+	  
     }
       
 

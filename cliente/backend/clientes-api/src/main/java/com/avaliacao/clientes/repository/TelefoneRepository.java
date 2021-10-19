@@ -7,6 +7,7 @@ import com.avaliacao.clientes.model.Telefone;
 
 @Repository
 public interface TelefoneRepository extends JpaRepository<Telefone, Long>{
+	
 
 }
 

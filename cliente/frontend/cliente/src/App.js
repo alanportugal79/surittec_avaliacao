@@ -20,7 +20,8 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.logado ? (<Clientes />) : (<Login setLogado={this.setLogado}/>)}                
+        {this.state.logado ? (<Clientes />) : (<Login setLogado={this.setLogado}/>)} 
+		
       </div>
     );
   }

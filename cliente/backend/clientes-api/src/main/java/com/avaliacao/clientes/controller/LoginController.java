@@ -22,6 +22,7 @@ public class LoginController {
 		String usuario = login.getUsuario();
 		String senha = login.getSenha();
 		
+		
 		ApiRetorno retorno = new ApiRetorno();
 		
 		if (usuario.equals("admin") || usuario.equals("comum")) {
